@@ -1,0 +1,20 @@
+version: '3.0'
+
+services:
+  octoprint:
+    build:
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 8090:80
+    privileged: true
+    volumes:
+     - ./data:/octoprint
+     - ./entrypoint:/entrypoint
+     - ./data/printer.cfg:/home/root/printer.cfg
+     - /dev:/dev
+    entrypoint: /entrypoint/init.sh
+    # uncomment the lines below to ensure camera streaming is enabled when
+    # you add a video device
+    #environment:
+    #  - ENABLE_MJPG_STREAMER=true
